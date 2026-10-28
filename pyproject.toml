@@ -1,0 +1,29 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pelandukos-iso-builder"
+version = "0.2.4"
+description = "A guarded graphical Debian Live ISO remastering application"
+requires-python = ">=3.11"
+license = {text = "GPL-3.0-or-later"}
+authors = [{name = "Tunnelbiz Studio Sdn Bhd"}]
+dependencies = ["PySide6>=6.4"]
+
+[project.optional-dependencies]
+test = ["pytest>=7"]
+
+[project.scripts]
+pelandukos-iso-builder = "main:main"
+
+[tool.setuptools]
+py-modules = ["main"]
+packages = ["core", "gui", "services", "adapters"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = [
+  "integration: executes local ISO and SquashFS tools on synthetic fixtures",
+  "real_iso: requires PELANDUKOS_TEST_ISO and the installed authorized helper",
+]

@@ -1,0 +1,10 @@
+__pycache__/
+.pytest_cache/
+.ruff_cache/
+.venv/
+*.pyc
+*.egg-info/
+dist/
+build/
+*.iso
+*.squashfs

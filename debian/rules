@@ -1,0 +1,9 @@
+#!/usr/bin/make -f
+%:
+	dh $@
+override_dh_auto_configure:
+override_dh_auto_build:
+override_dh_auto_install:
+	python3 scripts/build_deb.py --stage debian/pelandukos-iso-builder
+override_dh_auto_test:
+	QT_QPA_PLATFORM=offscreen python3 -m pytest -q tests/test_pelandukos_preset.py tests/test_boot_menu.py

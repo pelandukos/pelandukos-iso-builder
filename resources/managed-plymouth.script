@@ -1,0 +1,33 @@
+Window.SetBackgroundTopColor(1.0, 1.0, 1.0);
+Window.SetBackgroundBottomColor(1.0, 1.0, 1.0);
+w = Window.GetWidth(); h = Window.GetHeight();
+logo = Image("pelandukos.png");
+size = Math.Min(w, h) * 0.17;
+logo = logo.Scale(size, size * logo.GetHeight() / logo.GetWidth());
+mark = Sprite(logo);
+mark.SetPosition((w-logo.GetWidth())/2, h*0.43-logo.GetHeight()/2, 10);
+track = Image("crystal-track.png");
+fill = Image("crystal-fill.png");
+bar = Sprite(track); bar.SetPosition((w-240)/2, h*0.60, 10);
+progress = Sprite(); progress.SetPosition((w-240)/2, h*0.60, 11);
+fun boot_progress(time, value) {
+ progress.SetImage(fill.Scale(Math.Max(1, Math.Min(1,value)*240),4));
+}
+Plymouth.SetBootProgressFunction(boot_progress);
+message = Sprite();
+fun show_text(text) {
+ image = Image.Text(text, 0.12, 0.21, 0.30);
+ message.SetImage(image); message.SetPosition((w-image.GetWidth())/2,h*0.69,20);
+}
+fun display_password(prompt, bullets) {
+ text = prompt + "  ";
+ for(i=0;i<bullets;i++) text += "*";
+ show_text(text);
+}
+fun display_question(prompt, entry) { show_text(prompt + " " + entry); }
+fun display_normal() { show_text(""); }
+fun display_message(text) { show_text(text); }
+Plymouth.SetDisplayPasswordFunction(display_password);
+Plymouth.SetDisplayQuestionFunction(display_question);
+Plymouth.SetDisplayNormalFunction(display_normal);
+Plymouth.SetMessageFunction(display_message);

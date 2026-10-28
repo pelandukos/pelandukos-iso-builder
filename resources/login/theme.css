@@ -1,0 +1,21 @@
+/* PELANDUKOS_LOGIN_THEME_BEGIN */
+#lockDialogGroup {
+  background-color: #19334c;
+  background-image: url("resource:///org/gnome/shell/theme/pelandukos-login-background.svg");
+  background-size: cover;
+  background-position: center;
+}
+.login-dialog { color: #ffffff; }
+.login-dialog .user-icon { border-radius: 999px; border: 2px solid rgba(255,255,255,0.4); }
+.login-dialog-user-list { spacing: 12px; }
+.login-dialog-user-list-item { border-radius: 24px; padding: 16px 28px; }
+.login-dialog-user-list-item:selected { background-color: rgba(255,255,255,0.18); }
+.login-dialog-user-list-item:hover { background-color: rgba(255,255,255,0.12); }
+.login-dialog-user-list-item:focus { border: 2px solid #a9e7e0; }
+.login-dialog-user-list-item .user-widget-label { color: #ffffff; font-weight: bold; }
+.login-dialog-prompt-layout { spacing: 18px; padding: 24px; }
+.login-dialog StEntry { border-radius: 18px; padding: 12px 18px; color: #ffffff; background-color: rgba(15,33,52,0.7); border: 1px solid rgba(255,255,255,0.4); }
+.login-dialog StEntry:focus { border-color: #a9e7e0; }
+.login-dialog .modal-dialog-button { border-radius: 18px; }
+.login-dialog-banner-view { color: #e4f4f3; }
+/* PELANDUKOS_LOGIN_THEME_END */

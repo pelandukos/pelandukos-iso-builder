@@ -1,0 +1,77 @@
+#!/bin/bash
+
+# Fail konfigurasi live-config untuk Debian Live
+# Pastikan wallpaper, theme, icon dan cursor telah dimasukkan dalam ISO
+
+WALLPAPER="file:///usr/share/backgrounds/gnome/pelanduk22.png"
+GTK_THEME="pelandukos"
+ICON_THEME="pelandukos"
+CURSOR_THEME="pelandukos-cursor"
+FONT_NAME="Cantarell 11"
+USER_NAME="user"
+
+# Fungsi set gsettings untuk user
+set_user_gsettings() {
+    local USER=$1
+    local CMD="dbus-launch gsettings"
+
+    sudo -u "$USER" $CMD set org.gnome.desktop.background picture-uri "$WALLPAPER"
+    sudo -u "$USER" $CMD set org.gnome.desktop.background picture-uri-dark "$WALLPAPER"
+
+
+    sudo -u "$USER" $CMD set org.gnome.desktop.interface gtk-theme "$GTK_THEME"
+    sudo -u "$USER" $CMD set org.gnome.desktop.interface icon-theme "$ICON_THEME"
+    sudo -u "$USER" $CMD set org.gnome.desktop.interface cursor-theme "$CURSOR_THEME"
+    sudo -u "$USER" $CMD set org.gnome.desktop.interface font-name "$FONT_NAME"
+
+    # Aktifkan extension
+    EXTENSIONS="['dash-to-dock@micxgx.gmail.com', 'user-theme@gnome-shell-extensions.gcampax.github.com']"
+    sudo -u "$USER" $CMD set org.gnome.shell enabled-extensions "$EXTENSIONS"
+    sudo -u "$USER" $CMD set org.gnome.shell.extensions.user-theme name "$GTK_THEME"
+    # Konfigurasi dash-to-dock
+    sudo -u "$USER" $CMD set org.gnome.shell.extensions.dash-to-dock dash-max-icon-size 32
+    sudo -u "$USER" $CMD set org.gnome.shell.extensions.dash-to-dock dock-position 'BOTTOM'
+    sudo -u "$USER" $CMD set org.gnome.shell.extensions.dash-to-dock intellihide true
+    sudo -u "$USER" $CMD set org.gnome.shell.extensions.dash-to-dock show-trash true
+}
+
+# Tetapkan untuk live user
+set_user_gsettings "$USER_NAME"
+
+# Tetapkan untuk user baru melalui dconf default
+mkdir -p /etc/dconf/db/local.d
+cat > /etc/dconf/db/local.d/01-pelandukos <<EOF
+[org/gnome/desktop/background]
+picture-uri='${WALLPAPER}'
+picture-uri-dark='${WALLPAPER}'
+
+[org/gnome/shell/extensions/user-theme]
+name='pelandukos'
+
+[org/gnome/desktop/interface]
+gtk-theme='${GTK_THEME}'
+icon-theme='${ICON_THEME}'
+cursor-theme='${CURSOR_THEME}'
+font-name='${FONT_NAME}'
+
+[org/gnome/shell]
+enabled-extensions=['dash-to-dock@micxgx.gmail.com', 'user-theme@gnome-shell-extensions.gcampax.github.com']
+
+[org/gnome/shell/extensions/dash-to-dock]
+dash-max-icon-size=32
+dock-position='BOTTOM'
+intellihide=true
+show-trash=true
+EOF
+
+# Tetapkan untuk GDM login screen
+mkdir -p /etc/dconf/db/gdm.d
+cat > /etc/dconf/db/gdm.d/01-pelandukos <<EOF
+[org/gnome/desktop/background]
+picture-uri='${WALLPAPER}'
+picture-uri-dark='${WALLPAPER}'
+EOF
+
+# Apply dconf update
+dconf update
+

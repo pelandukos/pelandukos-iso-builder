@@ -1,0 +1,17 @@
+Package: pelandukos-iso-builder
+Version: 0.2.4
+Section: utils
+Priority: optional
+Architecture: amd64
+Maintainer: Tunnelbiz Studio Sdn Bhd <support@pelandukos.local>
+Depends: libglib2.0-bin, dconf-cli, python3 (>= 3.11), xorriso (>= 1.5.4), squashfs-tools (>= 1:4.5), bubblewrap (>= 0.8.0-2+deb12u1), e2fsprogs, initramfs-tools-core, python3-pil, pkexec, polkitd
+Recommends: qemu-system-x86, ovmf, busybox-static, kmod, file, zstd, python3-pyside6.qtwidgets, python3-pyside6.qtnetwork
+Suggests: python3-venv
+Description: Graphical builder for supported Debian Live ISO images
+ Imports, edits and rebuilds a guarded single-SquashFS Debian Live layout.
+ Includes PelandukOS minimal GNOME and repository app presets,
+ legacy duplicate GRUB menu cleanup, a separate Polkit helper,
+ private metadata-preserving storage,
+ checksum and readback validation, and an embedded QEMU boot preview.
+ This is an experimental Phase 1 release; real desktop ISO qualification
+ is required before production use. Debian 12 requires a user PySide6 venv.

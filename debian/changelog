@@ -1,0 +1,39 @@
+pelandukos-iso-builder (0.2.4) melaka; urgency=medium
+
+  * Keep GNOME live sessions awake during installation, gated by boot=live.
+  * Exclude live lock and power overrides from installed account defaults.
+  * Build a rounded GDM login theme with a soft PelandukOS background.
+  * Preserve high contrast resources and snapshot both GDM theme variants.
+
+ -- Tunnelbiz Studio Sdn Bhd <support@pelandukos.local>  Wed, 28 Oct 2026 12:00:00 +0800
+
+pelandukos-iso-builder (0.2.3) melaka; urgency=medium
+
+  * Bound the GDM logo to the lock-screen avatar size.
+  * Disable legacy GRUB backgrounds when applying the live theme.
+  * Require installer 3.1.3 identity validation.
+
+ -- Tunnelbiz Studio Sdn Bhd <support@pelandukos.local>  Thu, 22 Oct 2026 00:00:00 +0800
+
+pelandukos-iso-builder (0.2.2) melaka; urgency=medium
+
+  * Synchronize edited live GNOME appearance into new-account defaults.
+  * Preserve GDM assets and export the live GRUB theme for installed systems.
+  * Replace stale skeleton extensions with the live versions.
+
+ -- Tunnelbiz Studio Sdn Bhd <repo@tunnelbiz.com>  Wed, 21 Oct 2026 23:00:00 +0800
+
+pelandukos-iso-builder (0.2.1) melaka; urgency=medium
+
+  * Preserve and provision Snap, Flatpak, AppImage FUSE compatibility and Compiz.
+  * Reclassify unused library dependencies safely and clean unused Flatpak runtimes.
+
+ -- Tunnelbiz Studio Sdn Bhd <support@pelandukos.local>  Wed, 21 Oct 2026 20:00:00 +0800
+
+pelandukos-iso-builder (0.2.0) melaka; urgency=medium
+
+  * Add minimal GNOME and PelandukOS core application presets using VM rollback.
+  * Preserve PelandukOS Software, require repository Settings and installer 3.1.
+  * Include known duplicate GRUB alias cleanup and existing live editor fixes.
+
+ -- Tunnelbiz Studio Sdn Bhd <support@pelandukos.local>  Wed, 21 Oct 2026 19:00:00 +0800

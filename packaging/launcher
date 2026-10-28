@@ -1,0 +1,20 @@
+#!/bin/sh
+set -eu
+if [ "$(id -u)" -eq 0 ]; then
+    echo "Launch PelandukOS ISO Builder as your desktop user, not root." >&2
+    exit 1
+fi
+app=/usr/lib/pelandukos-iso-builder/app/main.py
+if /usr/bin/python3 -c 'from PySide6 import QtWidgets, QtNetwork' 2>/dev/null; then
+    exec /usr/bin/python3 "$app" "$@"
+fi
+runtime="${XDG_DATA_HOME:-$HOME/.local/share}/pelandukos-iso-builder/venv/bin/python"
+if [ -x "$runtime" ]; then
+    exec "$runtime" "$app" "$@"
+fi
+message="PySide6 QtWidgets/QtNetwork is missing. See /usr/share/doc/pelandukos-iso-builder/INSTALL.md for Debian 12/13 setup."
+echo "$message" >&2
+if command -v notify-send >/dev/null 2>&1; then
+    notify-send "PelandukOS ISO Builder" "$message" || true
+fi
+exit 1

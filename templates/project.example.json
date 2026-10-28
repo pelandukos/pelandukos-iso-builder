@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "id": "0123456789abcdef0123456789abcdef",
+  "owner_uid": 1000,
+  "name": "PelandukOS 1.1",
+  "state": "new",
+  "source": null,
+  "analysis": null,
+  "release": {
+    "distribution": "PelandukOS",
+    "version": "1.1",
+    "build_number": "1",
+    "release_date": "2026-10-20",
+    "developer": "Tunnelbiz Studio Sdn Bhd",
+    "notes": ""
+  },
+  "history": [],
+  "last_build": null
+}

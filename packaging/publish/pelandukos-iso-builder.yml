@@ -1,0 +1,56 @@
+---
+- name: Publish PelandukOS builder and installer once to shared storage
+  hosts: server2
+  become: true
+  vars:
+    release_dir: /root/ansible-webcluster/files/pelandukos-iso-builder-0.2.3
+  tasks:
+    - name: Validate staged release without repository changes
+      ansible.builtin.command: python3 {{ release_dir }}/publish.py --check
+      check_mode: false
+      changed_when: false
+    - name: Publish verified artifacts and signed metadata
+      ansible.builtin.command: python3 {{ release_dir }}/publish.py
+      when: not ansible_check_mode
+      register: publication
+      changed_when: "'Published PelandukOS' in publication.stdout"
+    - name: Report publication
+      ansible.builtin.debug:
+        var: publication.stdout
+      when: not ansible_check_mode
+- name: Verify artifacts on every web backend
+  hosts: webcluster
+  become: true
+  serial: 1
+  tasks:
+    - name: Read release manifest on controller
+      ansible.builtin.set_fact:
+        release_manifest: "{{ lookup('file', '/root/ansible-webcluster/files/pelandukos-iso-builder-0.2.3/manifest.json') | from_json }}"
+    - name: Verify published checksums
+      ansible.builtin.stat:
+        path: /var/www/webdata/tunnelbiz.com/pelandukos/repository/pool/pelandukos/{{ item.package }}/{{ item.package }}_{{ item.version }}_amd64.deb
+        checksum_algorithm: sha256
+      loop: "{{ release_manifest.packages }}"
+      loop_control:
+        label: "{{ item.package }}"
+      register: artifacts
+      when: not ansible_check_mode
+    - name: Check package hashes
+      ansible.builtin.assert:
+        that: item.stat.checksum == release_manifest.artifacts[item.item.package + '_' + item.item.version + '_amd64.deb']
+      loop: "{{ artifacts.results }}"
+      loop_control:
+        label: "{{ item.item.package }}"
+      when: not ansible_check_mode
+    - name: Verify HTTP delivery
+      ansible.builtin.uri:
+        url: http://127.0.0.1/pelandukos/repostory/pool/pelandukos/{{ item.package }}/{{ item.package }}_{{ item.version }}_amd64.deb
+        headers:
+          Host: tunnelbiz.com
+        method: HEAD
+        status_code: [200, 301, 302]
+        follow_redirects: none
+      loop: "{{ release_manifest.packages }}"
+      loop_control:
+        label: "{{ item.package }}"
+      when: not ansible_check_mode
